@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTodo } from '../../../../contexts/TodoContext';
 import Todo from '../../../../models/Todo';
 
@@ -9,7 +9,6 @@ type TodoListItemProps = {
 
 const TodoListItem: React.FC<TodoListItemProps> = ({todo}) => {
   const {toggle, removeTodo} = useTodo()
-  const history = useHistory();
   function onRemoveTodo(todo: Todo){
     removeTodo(todo)
   }
