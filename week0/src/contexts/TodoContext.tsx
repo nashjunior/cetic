@@ -6,21 +6,25 @@ type TodoContextType = {
   todos: Todo[];
   addTodo(title: string): void;
   removeTodo(todo: Todo): void;
-  toggle(todo: Todo): void
+  toggle(todo: Todo): void;
+  editTodo(todo: Todo): void;
+  //findTodo(todoId: number): void;
+  //todo: Todo;
 }
 
 const TodoContext = createContext<TodoContextType>({
   addTodo: () => {},
+  //findTodo: () => {},
+  editTodo: () => {},
   removeTodo: () => {},
   toggle: () => {},
   todos: [],
+  //todo: new Todo({} as TodoInterface),
 }) 
 
 export const TodoContextProvider: React.FC = ({children}) => {
   const [todos, setTodos] = useState<Todo[]>(get)
-  console.log(todos);
-  
-
+  //const [todo, setTodo] = useState(new Todo({} as TodoInterface))
   const addTodo = (title: string) => {
     const id = todos.length +1;
     setTodos([...todos, new Todo({id, title, done: false})])
@@ -30,6 +34,17 @@ export const TodoContextProvider: React.FC = ({children}) => {
   useEffect(() => {
     save(todos)
   }, [todos])
+
+  /* const findTodo = (todoId: number) => {
+
+  } */
+
+  const editTodo = (todo: Todo) => {
+    const index = todos.findIndex(oldTodo => oldTodo.getId() === todo.getId())
+    todos[index] = todo
+    setTodos([...todos])
+
+  }
 
   const removeTodo = (todo: Todo) => {
     const index = todos.indexOf(todo);
@@ -47,7 +62,7 @@ export const TodoContextProvider: React.FC = ({children}) => {
     setTodos([...todos])
   };
   return (
-    <TodoContext.Provider value={{addTodo, removeTodo, toggle, todos}}>
+    <TodoContext.Provider value={{addTodo, editTodo,removeTodo, toggle, todos}}>
       {children}
     </TodoContext.Provider>
   )

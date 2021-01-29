@@ -13,7 +13,6 @@ const TodoList: React.FC = () => {
           <tr>
             <th>#</th>
             <th>Tarefa</th>
-            <th>Id</th>
             <></>
           </tr>
         </thead>
