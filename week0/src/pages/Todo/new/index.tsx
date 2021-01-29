@@ -5,16 +5,19 @@ import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup'
 import { useTodo } from '../../../contexts/TodoContext';
 
-const schema = Yup.object().shape({
-  title: Yup.string().required('Tarefa Invalida'),
-}).required('Falta algo')
-
-type SchemaFormat = Yup.InferType<typeof schema>
-
 const NewTodo: React.FC = () => {
-  const {addTodo} = useTodo()
+  const {addTodo, todos} = useTodo()
   const history = useHistory()
-
+  
+  const schema = Yup.object().shape({
+    title: Yup.string().required('Tarefa Invalida').test('isValid', 'The title already exists', value => {
+      const todoExists =  todos.find(todo => todo.getTitle() === value);
+      return todoExists ? false : true
+    })
+  }).required('Falta algo')
+  
+  type SchemaFormat = Yup.InferType<typeof schema>
+  
   const {register, handleSubmit, errors} = useForm<SchemaFormat>({
     resolver: yupResolver(schema),
     defaultValues: {} as SchemaFormat,

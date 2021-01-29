@@ -1,3 +1,9 @@
+export type TodoInterface = {
+  id: number;
+  title: string;
+  done: boolean;
+};
+
 export default class Todo {
   private id: number;
   private title: string;
@@ -27,7 +33,7 @@ export default class Todo {
     this.done = done;
   }
 
-  constructor(id: number, title: string, done: boolean) {
+  constructor({ done, id, title }: TodoInterface) {
     this.done = done;
     this.title = title;
     this.id = id;

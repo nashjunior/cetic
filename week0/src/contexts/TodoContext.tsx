@@ -18,11 +18,12 @@ const TodoContext = createContext<TodoContextType>({
 
 export const TodoContextProvider: React.FC = ({children}) => {
   const [todos, setTodos] = useState<Todo[]>(get)
+  console.log(todos);
   
 
   const addTodo = (title: string) => {
-    const tamanho = todos.length +1;
-    setTodos([...todos, new Todo(tamanho, title, false)])
+    const id = todos.length +1;
+    setTodos([...todos, new Todo({id, title, done: false})])
     
   };
 

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { useTodo } from '../../../../contexts/TodoContext';
 import Todo from '../../../../models/Todo';
 
