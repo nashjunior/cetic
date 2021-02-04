@@ -29,7 +29,7 @@ export default class PointsController {
       return response.status(400).json({ message: 'Point not found' });
 
     const items = await knex('items')
-      .join('points_items', 'item.id', '=', 'points_items.item_id')
+      .join('points_items', 'items.id', '=', 'points_items.item_id')
       .where('points_items.point_id', 'id')
       .select('items.title');
 
