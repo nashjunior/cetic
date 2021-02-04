@@ -123,7 +123,7 @@ const Home:React.FC = () => {
               <strong>Voltar</strong>
             </button>
 
-            <Link to="/collect-point">
+            <Link to={{pathname: "/collect-point", state: {city: selectedCity, uf: selectedUF}}}>
               <span><FiLogIn/></span>
               <strong>Entrar</strong>
             </Link>
