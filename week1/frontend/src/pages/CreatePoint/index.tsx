@@ -1,12 +1,13 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import './styles.css'
 import logo from '../../assets/logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import {Map, TileLayer, Marker} from 'react-leaflet'
 import api from '../../services/api'
 import axios from 'axios'
 import { LeafletMouseEvent } from 'leaflet'
+import Dropzone from '../../components/Dropzone'
 
 type Items = {
   id: number;
@@ -29,6 +30,8 @@ const CreatePoint: React.FC = () => {
   const [cities, setCities] = useState<string[]>([])
   const [initialPosition, setinitialPosition] = useState<[number, number]>([0,0])
   const [selectedItems, setSelectedItems] = useState<number[]>([])
+  const [selectedFile, setSelectedFile] = useState<File>()
+  const history = useHistory()
 
   const [selectedUF, setSelectedUF] = useState('0')
   const [selectedCity, setSelectedCity] = useState('0')
@@ -112,16 +115,26 @@ const CreatePoint: React.FC = () => {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    
     const uf = selectedUF;
     const city = selectedCity;
     const [latitude, longitude] = selectedPosition;
     const items = selectedItems
-
-    const data = {
-      ...formData,
-      uf, city, latitude, longitude, items
-    }
-
+    const {email, name, whatsapp} = formData
+    const data = new FormData();
+  
+    data.append('email', email)
+    data.append('name', name)
+    data.append('whatsapp', whatsapp)
+    data.append('uf', uf)
+    data.append('city', city)
+    data.append('latitude', latitude.toString())
+    data.append('longitude', longitude.toString())
+    data.append('items', items.join(','))
+    
+    if(selectedFile)
+    data.append('image', selectedFile)
+    
     await api.post('points', data)
   }
 
@@ -138,6 +151,9 @@ const CreatePoint: React.FC = () => {
 
       <form onSubmit={handleSubmit}>
         <h1>Cadastro do<br/> ponto de coleta</h1>
+
+        <Dropzone onFileUploaded={setSelectedFile}/>
+
         <fieldset>
           <legend>
             <h2>Dados</h2>

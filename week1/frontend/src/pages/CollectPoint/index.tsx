@@ -22,6 +22,7 @@ type Points = {
 type PointSelected = {
   point: {
     image: string;
+    image_url:string;
     name: string;
     whatsapp: string;
     city: string;
@@ -68,9 +69,6 @@ const CollectPoint: React.FC = () => {
     loadPoints()
   }, [city, uf, selectedItems])
 
-  //console.log(`${collectPoints[0].latitude} - ${initialPosition[0]}`);
-  
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
       const {latitude, longitude} = position.coords
@@ -113,7 +111,7 @@ const CollectPoint: React.FC = () => {
       setIsCollectedPointSelected(true);
     }
   }  
-
+  
   return (
     <div id="page-collect-point">
       <button onClick={handleClickToMain} className="go-back">
@@ -164,7 +162,7 @@ const CollectPoint: React.FC = () => {
          {
            isCollectedPointSelected && (
             <div className="content-detail-collect-point">
-              <img src={selectedCollectPoint.point.image} alt="Imagem do Ponto"/>
+              <img src={selectedCollectPoint.point.image_url} alt="Imagem do Ponto"/>
 
               <div className="collect-point-name">
                 <h2>{selectedCollectPoint.point.name}</h2>
