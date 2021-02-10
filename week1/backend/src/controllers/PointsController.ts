@@ -58,7 +58,9 @@ export default class PointsController {
       items,
     } = request.body;
 
-    const trx = await knex.transaction();
+    console.log(request.body);
+
+    /* const trx = await knex.transaction();
     const point = {
       name,
       email,
@@ -86,8 +88,10 @@ export default class PointsController {
 
     const pointItems = await trx('points_items').insert(formatedItems);
 
-    await trx.commit();
+    await trx.commit(); */
 
-    return response.status(201).json({ id: point_id, ...point });
+    return response.status(201).json({
+      /* id: point_id, ...point */
+    });
   }
 }

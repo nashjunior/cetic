@@ -2,7 +2,7 @@ import { Router } from 'express';
 import PointsController from '../controllers/PointsController';
 import multerConfig from '../config/multer';
 import multer from 'multer';
-import { celebrate, Joi } from 'celebrate';
+import { celebrate, Joi, Segments } from 'celebrate';
 
 const pointsRouter = Router();
 const pointsController = new PointsController();
@@ -14,7 +14,7 @@ pointsRouter.get('/', pointsController.index);
 pointsRouter.post(
   '/',
   celebrate({
-    body: Joi.object().keys({
+    [Segments.BODY]: Joi.object().keys({
       name: Joi.string().required(),
       email: Joi.string().required(),
       whatsapp: Joi.string().required(),

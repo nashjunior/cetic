@@ -122,6 +122,11 @@ const CreatePoint: React.FC = () => {
     const items = selectedItems
     const {email, name, whatsapp} = formData
     const data = new FormData();
+
+    const body = {
+      email, name, whatsapp, uf, city, 
+      latitude, longitude, items: items.join(',')
+    }
   
     data.append('email', email)
     data.append('name', name)
@@ -133,7 +138,7 @@ const CreatePoint: React.FC = () => {
     data.append('items', items.join(','))
     
     if(selectedFile)
-    data.append('image', selectedFile)
+      data.append('image', selectedFile)
     
     await api.post('points', data)
   }
