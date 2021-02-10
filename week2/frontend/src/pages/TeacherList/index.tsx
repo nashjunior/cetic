@@ -1,4 +1,5 @@
 import React from 'react'
+import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
 import TeacherItem from '../../components/TeacherItem'
 import './styles.css'
@@ -8,19 +9,11 @@ const TeacherList: React.FC = () => {
         <div id="page-teacher-list" className="container">
             <PageHeader title="Estes são os proffys disponiveis">
                 <form id="search-teachers">
-                    <div className="input-block">
-                        <label htmlFor="subject">Materia</label>
-                        <input type="text" id="subject"/>
-                    </div>
-                    <div className="input-block">
+                    <Input type="text" label="Matéria" name="subject"/>
+                    
+                    <Input type="text" label="Dia da Semana" name="week_day"/>
 
-                        <label htmlFor="week_day">Dia da Semana</label>
-                        <input type="text" id="week_day"/>
-                    </div>
-                    <div className="input-block">
-                        <label htmlFor="time">Hora</label>
-                        <input type="text" id="time"/>
-                    </div>
+                    <Input type="text" label="Hora" name="time"/>
                     
                 </form>
             </PageHeader>
