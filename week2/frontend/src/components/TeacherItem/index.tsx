@@ -1,27 +1,35 @@
 import React from 'react'
 import './styles.css'
-import whatsappIcon from '../../assets/images/icons/whatsapp.png'
+import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
+import {TeachersFormat} from '../../pages/TeacherList/index'
+import api from '../../services/api'
 
-const TeacherItem: React.FC = () => {
+const TeacherItem: React.FC<TeachersFormat> = ({avatar, bio, name, subject, cost, whatsapp, id}) => {
+    async function createNewConnection() {
+        const response = await api.post('connections', {
+            user_id: id
+        })
+    }
+
     return (
         <article className="teacher-item">
                     <header>
-                        <img src="" alt="Imagem do Professor"/>
+                        <img src={avatar} alt="Imagem do Professor"/>
                         <div>
-                            <strong>Diego Fernandes</strong>
-                            <span>Química</span>
+                            <strong>{name}</strong>
+                            <span>{subject}</span>
                         </div>
                     </header>
 
-                    <p>Entusiasta das melhores tecnologias de quimica avancada</p>
+                    <p>{bio}</p>
 
                     <footer>
                         <p>
                             Preço/Hora
-                            <strong>R$ 00,00</strong>
+                            <strong>R$ {`${cost},00`}</strong>
                         </p>
                          
-                        <button type="button">
+                        <button type="button" onClick={createNewConnection}>
                             <img src={whatsappIcon} alt="Icone Whatsapp"/>
                             Entrar em contato 
                         </button>
