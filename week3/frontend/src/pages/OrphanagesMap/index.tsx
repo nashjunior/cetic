@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './styles.css'
 import mapMarkerImg from '../../assets/images/map-marker.svg'
 import { Link } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi'
 import { MapContainer, TileLayer } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
+import LocationMarker from '../../components/LocationMarker'
+import api from '../../services/api'
+
+
+interface Orphanage {
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+}
 
 const OrphanagesMap:React.FC = () => {
+  const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      const response = await api.get<Orphanage[]>("orphanages");
+      setOrphanages(response.data);
+      
+    }
+    load()
+  }, []);
+
   return (
     <div id="page-map">
       <aside>
@@ -30,9 +50,16 @@ const OrphanagesMap:React.FC = () => {
       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
+
+      {orphanages.map(orphanage => {
+        return (
+          <LocationMarker key={orphanage.id} position={[orphanage.latitude, orphanage.longitude]}/>
+        )
+      })}
+
       </MapContainer>
 
-      <Link to="" className="create-orphanage">
+      <Link to="/orphanage/create" className="create-orphanage">
         <FiPlus size={32} color="#fff"/>
       </Link>
     </div>
