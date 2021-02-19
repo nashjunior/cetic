@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Marker, Popup, useMapEvents } from 'react-leaflet'
 import Leaflet from 'leaflet'
 import mapMarkerImg from '../../assets/images/map-marker.svg'

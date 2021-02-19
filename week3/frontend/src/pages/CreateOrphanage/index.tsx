@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useHistory } from 'react-router';
@@ -10,6 +10,7 @@ import './styles.css'
 const CreateOrphanage :React.FC = () => {
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0 });
   const [ name, setName ] = useState('');
+  const [initialPosition, setinitialPosition] = useState<[number, number]>([0,0])
   const [ about, setAbout ] = useState('');
   const [ instructions, setInstructions ] = useState('');
   const [ opening_hours, setOpening_hours ] = useState('');
@@ -57,6 +58,13 @@ const CreateOrphanage :React.FC = () => {
     history.push('/app');
   }
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const {latitude, longitude} = position.coords
+      setinitialPosition([latitude, longitude])
+    })
+  }, [])
+
   return (
     <div id="page-create-orphanage">
       <Sidebar />
@@ -67,7 +75,7 @@ const CreateOrphanage :React.FC = () => {
             <legend>Dados</legend>
 
             <MapContainer  
-              center={[-27.1144769,-49.9951403]} 
+              center={initialPosition} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
             >
