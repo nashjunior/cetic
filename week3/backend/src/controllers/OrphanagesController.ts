@@ -5,27 +5,23 @@ import Orphanage from '../models/Orphanage';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
 
-export default class OrphanagesController {
-  private orphanageRepository: Repository<Orphanage>;
-  private imageRepository: Repository<Image>;
 
-  constructor() {
-    this.orphanageRepository = getRepository(Orphanage);
-    this.imageRepository = getRepository(Image);
-  }
+
+export default {
 
   async index(request: Request, response: Response): Promise<Response> {
-    const orphanges = await this.orphanageRepository.find({
+    const orphanageRepository = getRepository(Orphanage);
+    const orphanges = await orphanageRepository.find({
       relations: ['images'],
     });
 
     return response.json(orphanageView.rederMany(orphanges));
-  }
+  },
 
   async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-
-    const orphanage = await this.orphanageRepository.findOneOrFail({
+    const orphanageRepository = getRepository(Orphanage);
+    const orphanage = await orphanageRepository.findOneOrFail({
       where: {
         id: Number.parseInt(id),
       },
@@ -35,7 +31,7 @@ export default class OrphanagesController {
     const formatedOrphanage = orphanageView.render(orphanage);
 
     return response.json(formatedOrphanage);
-  }
+  },
 
   async create(request: Request, response: Response): Promise<Response> {
     const {
@@ -83,10 +79,10 @@ export default class OrphanagesController {
     });
 
     await schema.validate(data, { abortEarly: false });
+    const orphanageRepository = getRepository(Orphanage);
+    const newOrphanage = orphanageRepository.create(data);
 
-    const newOrphanage = this.orphanageRepository.create(data);
-
-    const orphanage = await this.orphanageRepository.save(newOrphanage);
+    const orphanage = await orphanageRepository.save(newOrphanage);
 
     return response.status(201).json({ orphanage });
   }

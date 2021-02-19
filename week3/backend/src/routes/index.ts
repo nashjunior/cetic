@@ -5,10 +5,9 @@ import multerConfig from '../config/upload';
 
 const upload = multer(multerConfig);
 const routes = Router();
-/* const orphanagesController = new OrphanagesController();
 
-routes.get('/orphanages', orphanagesController.index);
-routes.get('/orphanages/:id', orphanagesController.show);
-routes.post('/orphanages', upload.array('images'), orphanagesController.create);
- */
+routes.get('/orphanages', OrphanagesController.index);
+routes.get('/orphanages/:id', OrphanagesController.show);
+routes.post('/orphanages', upload.array('images'), OrphanagesController.create);
+
 export default routes;

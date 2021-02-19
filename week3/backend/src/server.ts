@@ -2,14 +2,11 @@ import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 import routes from './routes';
+import './database/connection'
 import path from 'path';
 import 'express-async-errors';
 import errorHandler from './errors/handleError';
-import { createConnection, getConnectionManager } from 'typeorm';
 
-createConnection();
-
-console.log(getConnectionManager().connections);
 const app = express();
 app.use(cors());
 app.use(express.json());
