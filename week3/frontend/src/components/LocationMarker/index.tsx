@@ -12,6 +12,10 @@ type ILocationMarkerProps = {
   interactive?: boolean;
   position: LatLong;
   onClick?: (latlong: {latitude: number, longitude: number}) => void
+  orphanage?:{
+    id: number;
+    name: string
+  }
 }
 
 
@@ -22,7 +26,7 @@ const mapIcon = Leaflet.icon({
   popupAnchor: [170, 2]
 })
 
-const LocationMarker: React.FC<ILocationMarkerProps> = ({position,interactive = true, onClick}) => {
+const LocationMarker: React.FC<ILocationMarkerProps> = ({orphanage, position,interactive = true, onClick}) => {
   const map = useMapEvents({
     click(event) {
       if(onClick) {
@@ -49,8 +53,8 @@ const LocationMarker: React.FC<ILocationMarkerProps> = ({position,interactive = 
   return  (
     <Marker position={position} icon={mapIcon}>
       <Popup className="map-popup" closeButton={false} minWidth={240} maxHeight={240}>
-        You are here
-        <Link to="">
+        {orphanage?.name}
+        <Link to={`orphanages/${orphanage && orphanage.id}`}>
           <FiArrowRight size={20} color="#fff"/>
         </Link>
       </Popup>

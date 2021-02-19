@@ -53,7 +53,7 @@ const OrphanagesMap:React.FC = () => {
 
       {orphanages.map(orphanage => {
         return (
-          <LocationMarker key={orphanage.id} position={[orphanage.latitude, orphanage.longitude]}/>
+          <LocationMarker orphanage={{id: orphanage.id, name: orphanage.name}} key={orphanage.id} position={[orphanage.latitude, orphanage.longitude]}/>
         )
       })}
 
