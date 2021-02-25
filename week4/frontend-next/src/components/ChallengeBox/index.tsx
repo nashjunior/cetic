@@ -1,9 +1,21 @@
 import React, { useState } from 'react'
 import { useChallengers } from '../../contexts/ChallengesContext'
+import { useCountDown } from '../../contexts/CountDownContext'
 import styles from '../../styles/components/ChallengeBox.module.css'
 
 const ChallengeBox:React.FC = () => {
-  const {activeChallenge, resetChallenge} = useChallengers()
+  const {activeChallenge, resetChallenge, updateChallengesCompleted} = useChallengers()
+  const {stopCountDown} = useCountDown()
+
+  function handleFailedChallege() {
+    resetChallenge()
+    stopCountDown()
+  }
+
+  function handleChallengeSucceeded(){
+    updateChallengesCompleted()
+    stopCountDown()
+  }
 
   return (
     <div className={styles.challengeBoxContainer}>
@@ -19,8 +31,8 @@ const ChallengeBox:React.FC = () => {
             </main>
 
             <footer>
-              <button type="button" className={styles.challengeFailedButton} onClick={resetChallenge}>Falhei</button>
-              <button type="button" className={styles.challegeCompletedButton}>Completei</button>
+              <button type="button" className={styles.challengeFailedButton} onClick={handleFailedChallege}>Falhei</button>
+              <button type="button" className={styles.challegeCompletedButton} onClick={handleChallengeSucceeded}>Completei</button>
             </footer>
           </div>
         ) : (

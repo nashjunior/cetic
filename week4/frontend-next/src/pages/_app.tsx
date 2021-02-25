@@ -6,7 +6,7 @@ import '../styles/global.css'
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ChallengesProvider>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
     </ChallengesProvider>
   )
 }
